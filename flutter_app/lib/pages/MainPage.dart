@@ -1,46 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:myBCAA/pages/measure.dart';
+import 'package:myBCAA/pages/settings.dart';
+import 'package:myBCAA/pages/lifestyle.dart';
+import 'package:myBCAA/pages/profile.dart';
 
+
+// import './helpers/Line_Chart.dart';
 const PrimaryColor = const Color(0xFF288EC7);
 const SpecialColor1 = const Color(0xFF2FAFB2);
 const SpecialColor2 = const Color(0xFFD1BC64);
 const SpecialColor3 = const Color(0xFFCF364A);
 
-class Home extends StatelessWidget {
+class MainPage extends StatefulWidget {
+
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+
+  int _currentIndex = 0;
+
+  final List<Widget> _children = [
+    Measure(),
+    SettingPage(),
+    LifeStyle(),
+    Profile(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Metabolites'),
-        centerTitle: true,
-        backgroundColor: PrimaryColor,
-      ),
-      body: Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              color: SpecialColor1,
-              padding: EdgeInsets.all(30.0),
-              child: Text('Tryptophan'),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: SpecialColor2,
-              padding: EdgeInsets.all(30.0),
-              child: Text('Tyrosine'),
-            ),
-          ),
-          Expanded(
-            child : Container(
-              color: SpecialColor3,
-              padding: EdgeInsets.all(30.0),
-              child: Text('BCAAs'),
-            ),
-          ),
-        ],
-      ),
+      body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-
+        currentIndex: _currentIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.timeline),
@@ -61,8 +54,17 @@ class Home extends StatelessWidget {
         ],
         selectedItemColor: PrimaryColor,
         type: BottomNavigationBarType.fixed,
-
+        onTap: onTappedBar,
       ),
     );
   }
+
+  void onTappedBar(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+
+
 }
