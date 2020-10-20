@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:myBCAA/helpers/MeasurementsChart.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:myBCAA/helpers/measuring_raw_data.dart';
+import 'package:myBCAA/helpers/myData.dart';
 
 import './BackgroundCollectingTask.dart';
 import './helpers/Line_Chart.dart';
 import './helpers/PaintStyle.dart';
+
+const PrimaryColor = const Color(0xFF288EC7);
+const SpecialColor1 = const Color(0xFF2FAFB2);
+const SpecialColor2 = const Color(0xFFD1BC64);
+const SpecialColor3 = const Color(0xFFCF364A);
 
 class BackgroundCollectedPage extends StatelessWidget {
   bool isShowingMainData;
@@ -67,9 +72,16 @@ class BackgroundCollectedPage extends StatelessWidget {
               timestamp.minute.toString()));
     });
 
+
     return Scaffold(
         appBar: AppBar(
-          title: Text('Collected data'),
+          title: Text(
+            'Collected data',
+            style: TextStyle(fontWeight: FontWeight.w800),
+          ),
+          backgroundColor: PrimaryColor,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
           actions: <Widget>[
             // Progress circle
             (task.inProgress
@@ -89,132 +101,136 @@ class BackgroundCollectedPage extends StatelessWidget {
         ),
         body: ListView(
           children: <Widget>[
-            Divider(),
-            ListTile(
-              title: Center(child: const Text('Amino Acid Measurements')),
-            ),
             Container(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        CircleAvatar(
-                          backgroundColor: SpecialColor1,
-                          radius: 5,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          'Tryptophan',
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        CircleAvatar(
-                          backgroundColor: SpecialColor2,
-                          radius: 5,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          'Tyrosine',
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              padding: EdgeInsets.fromLTRB(5,5,5,0),
+              child: Card(
+                child: (task.measurementComplete
+                    ? Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Center(
+                              child: const Text(
+                                'Raw Voltammogram',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                              width: double.infinity,
+                              child: Text("Current (µA)", textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 10
+                                  ))),
+                          Line_Chart(
+                            constraints: const BoxConstraints.expand(height: 200),
+                            arguments: argument1,
+                            argumentsLabels: argumentsLabels,
+                            values: [
+                              lastSamples.map((sample) => sample.dpv1),
+                              lastSamples.map((sample) => sample.dpv2),
+                              lastSamples.map((sample) => sample.dpvbase1),
+                              lastSamples.map((sample) => sample.dpvbase2),
+                            ],
+                            verticalLinesStyle:
+                                const PaintStyle(color: Colors.grey),
+                            additionalMinimalHorizontalLabelsInterval: 0,
+                            additionalMinimalVerticalLablesInterval: 0,
+                            seriesPointsStyles: [
+                              null,
+                              null,
+                              //const PaintStyle(style: PaintingStyle.stroke, strokeWidth: 1.7*3, color: Colors.indigo, strokeCap: StrokeCap.round),
+                            ],
+                            seriesLinesStyles: [
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 1.5,
+                                  color: SpecialColor1),
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 1.5,
+                                  color: SpecialColor2),
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 0.5,
+                                  color: SpecialColor1),
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 0.5,
+                                  color: SpecialColor2),
+                            ],
+                          ),
+                        ],
+                      )
+                    : Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Center(
+                              child: const Text(
+                                'Raw Voltammogram',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                              width: double.infinity,
+                              child: Text("Current (µA)", textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 10
+                                  ))),
+                          Line_Chart(
+                            constraints: const BoxConstraints.expand(height: 200),
+                            arguments: arguments,
+                            argumentsLabels: argumentsLabels,
+                            values: [
+                              lastSamples.map((sample) => sample.dpv1),
+                              lastSamples.map((sample) => sample.dpv2),
+                              lastSamples.map((sample) => sample.dpvbase1),
+                              lastSamples.map((sample) => sample.dpvbase2),
+                              lastSamples.map((sample) => sample.sub1),
+                              lastSamples.map((sample) => sample.sub2),
+                            ],
+                            verticalLinesStyle:
+                                const PaintStyle(color: Colors.grey),
+                            additionalMinimalHorizontalLabelsInterval: 0,
+                            additionalMinimalVerticalLablesInterval: 0,
+                            seriesPointsStyles: [
+                              null,
+                              null,
+                              //const PaintStyle(style: PaintingStyle.stroke, strokeWidth: 1.7*3, color: Colors.indigo, strokeCap: StrokeCap.round),
+                            ],
+                            seriesLinesStyles: [
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 1.2,
+                                  color: SpecialColor1),
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 1.2,
+                                  color: SpecialColor2),
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 0.3,
+                                  color: SpecialColor1),
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 0.3,
+                                  color: SpecialColor2),
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 0.3,
+                                  color: SpecialColor1),
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 0.3,
+                                  color: SpecialColor2),
+                            ],
+                          ),
+                        ],
+                      )),
               ),
             ),
-            (task.measurementComplete
-                ? Line_Chart(
-                    constraints: const BoxConstraints.expand(height: 200),
-                    arguments: argument1,
-                    argumentsLabels: argumentsLabels,
-                    values: [
-                      lastSamples.map((sample) => sample.dpv1),
-                      lastSamples.map((sample) => sample.dpv2),
-                      lastSamples.map((sample) => sample.dpvbase1),
-                      lastSamples.map((sample) => sample.dpvbase2),
-                    ],
-                    verticalLinesStyle: const PaintStyle(color: Colors.grey),
-                    additionalMinimalHorizontalLabelsInterval: 0,
-                    additionalMinimalVerticalLablesInterval: 0,
-                    seriesPointsStyles: [
-                      null,
-                      null,
-                      //const PaintStyle(style: PaintingStyle.stroke, strokeWidth: 1.7*3, color: Colors.indigo, strokeCap: StrokeCap.round),
-                    ],
-                    seriesLinesStyles: [
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 1.5,
-                          color: SpecialColor1),
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 1.5,
-                          color: SpecialColor2),
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 0.5,
-                          color: SpecialColor1),
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 0.5,
-                          color: SpecialColor2),
-                    ],
-                  )
-                : Line_Chart(
-                    constraints: const BoxConstraints.expand(height: 200),
-                    arguments: arguments,
-                    argumentsLabels: argumentsLabels,
-                    values: [
-                      lastSamples.map((sample) => sample.dpv1),
-                      lastSamples.map((sample) => sample.dpv2),
-                      lastSamples.map((sample) => sample.dpvbase1),
-                      lastSamples.map((sample) => sample.dpvbase2),
-                      lastSamples.map((sample) => sample.sub1),
-                      lastSamples.map((sample) => sample.sub2),
-                    ],
-                    verticalLinesStyle: const PaintStyle(color: Colors.grey),
-                    additionalMinimalHorizontalLabelsInterval: 0,
-                    additionalMinimalVerticalLablesInterval: 0,
-                    seriesPointsStyles: [
-                      null,
-                      null,
-                      //const PaintStyle(style: PaintingStyle.stroke, strokeWidth: 1.7*3, color: Colors.indigo, strokeCap: StrokeCap.round),
-                    ],
-                    seriesLinesStyles: [
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 1.2,
-                          color: SpecialColor1),
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 1.2,
-                          color: SpecialColor2),
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 0.3,
-                          color: SpecialColor1),
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 0.3,
-                          color: SpecialColor2),
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 0.3,
-                          color: SpecialColor1),
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 0.3,
-                          color: SpecialColor2),
-                    ],
-                  )),
-            Divider(),
 //            AspectRatio(
 //              aspectRatio: 1.23,
 //              child: Container(
@@ -260,58 +276,211 @@ class BackgroundCollectedPage extends StatelessWidget {
 //                ),
 //              ),
 //            ),
-//            Divider(),
-            (task.measurementComplete
-                ? Line_Chart(
-                    constraints: const BoxConstraints.expand(height: 200),
-                    arguments: argument1,
-                    argumentsLabels: argumentsLabels,
-                    values: [
-                      lastSamples.map((sample) => sample.sub1),
-                      lastSamples.map((sample) => sample.sub2),
-                    ],
-                    verticalLinesStyle: const PaintStyle(color: Colors.grey),
-                    additionalMinimalHorizontalLabelsInterval: 0,
-                    additionalMinimalVerticalLablesInterval: 0,
-                    seriesPointsStyles: [
-                      null,
-                      null,
-                      //const PaintStyle(style: PaintingStyle.stroke, strokeWidth: 1.7*3, color: Colors.indigo, strokeCap: StrokeCap.round),
-                    ],
-                    seriesLinesStyles: [
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 1.2,
-                          color: SpecialColor1),
-                      const PaintStyle(
-                          style: PaintingStyle.stroke,
-                          strokeWidth: 1.2,
-                          color: SpecialColor2),
-                    ],
-                  )
-                : Container(/* Dummy */)),
-            Divider(),
-            (task.measurementComplete
-                ? Card(
-                    elevation: 5,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          //  vertical: 10.0,
-                          //  horizontal: 5,
+            Container(
+              padding: EdgeInsets.fromLTRB(5,0,5,0),
+              child: Card(
+                child: (task.measurementComplete
+                    ? Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Center(
+                              child: const Text(
+                                'Corrected Voltammogram',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
                           ),
-                      width: double.infinity,
-                      margin: EdgeInsets.symmetric(
-                        vertical: 5,
-                        horizontal: 5,
+                          SizedBox(
+                              width: double.infinity,
+                              child: Text("Current (µA)", textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 10
+                                  ))),
+                          Line_Chart(
+                            constraints: const BoxConstraints.expand(height: 200),
+                            arguments: argument1,
+                            argumentsLabels: argumentsLabels,
+                            values: [
+                              lastSamples.map((sample) => sample.sub1),
+                              lastSamples.map((sample) => sample.sub2),
+                            ],
+                            verticalLinesStyle:
+                                const PaintStyle(color: Colors.grey),
+                            additionalMinimalHorizontalLabelsInterval: 0,
+                            additionalMinimalVerticalLablesInterval: 0,
+                            seriesPointsStyles: [
+                              null,
+                              null,
+                              //const PaintStyle(style: PaintingStyle.stroke, strokeWidth: 1.7*3, color: Colors.indigo, strokeCap: StrokeCap.round),
+                            ],
+                            seriesLinesStyles: [
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 1.2,
+                                  color: SpecialColor1),
+                              const PaintStyle(
+                                  style: PaintingStyle.stroke,
+                                  strokeWidth: 1.2,
+                                  color: SpecialColor2),
+                            ],
+                          ),
+                        ],
+                      )
+                    : Container()),
+              ),
+            ),
+//            (task.measurementComplete
+//                ? Container(
+//                    height: 300,
+//                    padding: EdgeInsets.all(5),
+//                    child: Card(
+//                      child: Padding(
+//                        padding: const EdgeInsets.all(1.0),
+//                        child: Column(
+//                          children: <Widget>[
+//                            Expanded(
+//                              child: charts.Series(
+//                                id: 'tbd',
+//                                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+//                                domainFn: lastSamples.map((sample) => sample.timestamp),
+//                                measureFn: lastSamples.map((sample) => sample.sub1),
+//                                data: lastSamples,
+//                              ),
+//                            )
+//                          ],
+//                        ),
+//                      ),
+//                    ),
+//                  )
+//                : Container()),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: SpecialColor1,
+                        radius: 5,
                       ),
-                      child: Text(
-                        'Tryptophan: \n Ep: ${task.dpv1Ep.toStringAsFixed(3)} V \n Ip: ${task.dpv1Ip.toStringAsFixed(3)} uA  \n Tyrosine: \n Ep: ${task.dpv2Ep.toStringAsFixed(3)} V \n Ip: ${task.dpv2Ip.toStringAsFixed(3)} uA',
-                        style: Theme.of(context).textTheme.body2,
-                        textAlign: TextAlign.center,
+                      SizedBox(width: 5),
+                      Text(
+                        'Tryptophan',
                       ),
-                    ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: SpecialColor2,
+                        radius: 5,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Tyrosine',
+                      ),
+                    ],
                   )
-                : Container(/* Dummy */)),
+                ],
+              ),
+            ), //Legend
+            SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(color: PrimaryColor),
+              child: (task.measurementComplete
+                  ? Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              RawData(
+                                text1: "Ep",
+                                number1: double.parse(
+                                    task.dpv1Ep.toStringAsFixed(3)),
+                                color1: SpecialColor1,
+                                unit: "V",
+                              ),
+                              RawData(
+                                text1: "Ip",
+                                number1: double.parse(
+                                    task.dpv1Ip.toStringAsFixed(3)),
+                                color1: SpecialColor1,
+                                unit: "uA",
+                              ),
+                              RawData(
+                                text1: "Ep",
+                                number1: double.parse(
+                                    task.dpv2Ep.toStringAsFixed(3)),
+                                color1: SpecialColor2,
+                                unit: "V",
+                              ),
+                              RawData(
+                                text1: "Ip",
+                                number1: double.parse(
+                                    task.dpv2Ip.toStringAsFixed(3)),
+                                color1: SpecialColor2,
+                                unit: "uA",
+                              )
+//                      Container(
+//                        decoration: BoxDecoration(
+//                            borderRadius: BorderRadius.all(Radius.circular(5)),
+//                            border: Border.all(
+//                                width: 2,
+//                                color: SpecialColor2,
+//                                style: BorderStyle.solid)),
+//                        child: Padding(
+//                          padding: const EdgeInsets.all(8.0),
+//                          child: Column(
+//                            children: <Widget>[
+//                              Row(
+//                                children: <Widget>[
+//                                  SizedBox(width: 5),
+//                                  Text(
+//                                    'Tyrosine',
+//                                  ),
+//                                ],
+//                              ),
+//                              SizedBox(height: 10),
+//                              Text(
+//                                'Ip: ${task.dpv1Ip.toStringAsFixed(3)} uA',
+//                                style: TextStyle(fontWeight: FontWeight.w900),
+//                              ),
+//                              Text(
+//                                'Ip: ${task.dpv2Ip.toStringAsFixed(3)} uA',
+//                                style: TextStyle(fontWeight: FontWeight.w900),
+//                              ),
+//                            ],
+//                          ),
+//                        ),
+//                      ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(color: PrimaryColor),
+                          child: ListTile(
+                            title: FlatButton(
+                              color: Colors.white,
+                              child: Text("Add Data"),
+                              onPressed: () {
+                                Navigator.of(context).pop(MyData(
+                                    dateTime: DateTime.now(),
+                                    value1: double.parse(
+                                        task.dpv1Ip.toStringAsFixed(3)),
+                                    value2: double.parse(
+                                        task.dpv2Ip.toStringAsFixed(3))));
+                              },
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  : Container(/*dummy*/)),
+            ),
 
             /*  ListTile(
               leading: const Icon(Icons.filter_vintage),
@@ -340,5 +509,4 @@ class BackgroundCollectedPage extends StatelessWidget {
           ],
         ));
   }
-
 }

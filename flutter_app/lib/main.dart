@@ -10,6 +10,7 @@ const PrimaryColor = const Color(0xFF288EC7);
 void main() => runApp(new ExampleApplication());
 
 class ExampleApplication extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +19,6 @@ class ExampleApplication extends StatelessWidget {
       routes: {
         '/': (context) => Loading(),
         '/home': (context) => MainPage(),
-        '/data': (context) => LineChartSample1()
       },
       theme: ThemeData(
         textTheme: GoogleFonts.latoTextTheme(

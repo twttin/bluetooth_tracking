@@ -3,52 +3,46 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:myBCAA/main.dart';
 
-class CustomCard extends StatelessWidget {
+class RawData extends StatelessWidget {
   final String text1;
   final double number1;
   final Color color1;
+  final String unit;
 
-  CustomCard({this.text1, this.number1, this.color1});
+  RawData({this.text1, this.number1, this.color1, this.unit});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(5))
-      ),
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(5))),
       child: Column(
         children: <Widget>[
-          Text(
-            text1,
-          ),
-          SizedBox(
-            height: 10,
-          ),
           Container(
-              height: 100,
-              width: 100,
+              height: 80,
+              width: 80,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(50)),
                   border: Border.all(
                       width: 5, color: color1, style: BorderStyle.solid)),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                      "$number1",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900
-                    ),
+                    text1,
                   ),
                   Text(
-                    'μm'
+                    "$number1",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+                  ),
+                  Text(
+                    '$unit',
+                    style: TextStyle(color: Colors.grey),
                   ),
                 ],
-              )
-          ),
+              )),
         ],
       ),
     );

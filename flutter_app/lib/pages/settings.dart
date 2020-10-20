@@ -1,17 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:myBCAA/pages/StoredData.dart';
 
 import '../DiscoveryPage.dart';
 import '../SelectBondedDevicePage.dart';
-import '../ChatPage.dart';
 import '../BackgroundCollectingTask.dart';
 import '../BackgroundCollectedPage.dart';
 
 // import './helpers/Line_Chart.dart';
+const PrimaryColor = const Color(0xFF288EC7);
 
 class SettingPage extends StatefulWidget {
 
@@ -20,6 +18,7 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+
 
 
   BluetoothState _bluetoothState = BluetoothState.UNKNOWN;

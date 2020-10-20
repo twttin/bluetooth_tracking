@@ -3,13 +3,14 @@ import 'package:myBCAA/pages/measure.dart';
 import 'package:myBCAA/pages/settings.dart';
 import 'package:myBCAA/pages/lifestyle.dart';
 import 'package:myBCAA/pages/profile.dart';
+import 'package:charts_flutter/flutter.dart';
 
 
-// import './helpers/Line_Chart.dart';
-const PrimaryColor = const Color(0xFF288EC7);
-const SpecialColor1 = const Color(0xFF2FAFB2);
-const SpecialColor2 = const Color(0xFFD1BC64);
-const SpecialColor3 = const Color(0xFFCF364A);
+
+//const PrimaryColor = const Color(0xFF288EC7);
+//const SpecialColor1 = const Color(0xFF2FAFB2);
+//const SpecialColor2 = const Color(0xFFD1BC64);
+//const SpecialColor3 = const Color(0xFFCF364A);
 
 class MainPage extends StatefulWidget {
 
@@ -31,7 +32,16 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _children[_currentIndex],
+      body: IndexedStack(
+        children: <Widget>[
+          Measure(),
+          SettingPage(),
+          LifeStyle(),
+          Profile(),
+        ],
+        index: _currentIndex,
+      ),
+      //body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         items: const <BottomNavigationBarItem>[
@@ -52,7 +62,7 @@ class _MainPageState extends State<MainPage> {
             title: Text('Profile'),
           ),
         ],
-        selectedItemColor: PrimaryColor,
+//        selectedItemColor: Color.white,
         type: BottomNavigationBarType.fixed,
         onTap: onTappedBar,
       ),

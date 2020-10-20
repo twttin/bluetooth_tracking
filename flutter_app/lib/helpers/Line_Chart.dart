@@ -152,28 +152,37 @@ class Line_Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-        constraints: this.constraints,
-        child: CustomPaint(
-            painter: _Line_ChartPainter(
-          padding: padding,
-          arguments: arguments,
-          argumentsLabels: argumentsLabels,
-          values: values,
-          valuesLabels: valuesLabels,
-          horizontalLabelsTextStyle:
-              horizontalLabelsTextStyle ?? Theme.of(context).textTheme.caption,
-          verticalLabelsTextStyle:
-              verticalLabelsTextStyle ?? Theme.of(context).textTheme.caption,
-          horizontalLinesPaint: horizontalLinesPaint,
-          verticalLinesPaint: verticalLinesPaint,
-          additionalMinimalHorizontalLabelsInterval:
-              additionalMinimalHorizontalLabelsInterval,
-          additionalMinimalVerticalLablesInterval:
-              additionalMinimalVerticalLablesInterval,
-          seriesPointsPaints: seriesPointsPaints,
-          seriesLinesPaints: seriesLinesPaints,
-        )));
+    return Column(
+      children: <Widget>[
+        ConstrainedBox(
+            constraints: this.constraints,
+            child: CustomPaint(
+                painter: _Line_ChartPainter(
+              padding: padding,
+              arguments: arguments,
+              argumentsLabels: argumentsLabels,
+              values: values,
+              valuesLabels: valuesLabels,
+              horizontalLabelsTextStyle:
+                  horizontalLabelsTextStyle ?? Theme.of(context).textTheme.caption,
+              verticalLabelsTextStyle:
+                  verticalLabelsTextStyle ?? Theme.of(context).textTheme.caption,
+              horizontalLinesPaint: horizontalLinesPaint,
+              verticalLinesPaint: verticalLinesPaint,
+              additionalMinimalHorizontalLabelsInterval:
+                  additionalMinimalHorizontalLabelsInterval,
+              additionalMinimalVerticalLablesInterval:
+                  additionalMinimalVerticalLablesInterval,
+              seriesPointsPaints: seriesPointsPaints,
+              seriesLinesPaints: seriesLinesPaints,
+            ))),
+        Text("Potential (V)",
+        style: TextStyle(
+          fontSize: 10
+        ),),
+        SizedBox(height: 10)
+      ],
+    );
   }
 }
 
@@ -330,7 +339,7 @@ class _Line_ChartPainter extends CustomPainter {
       // If no labels provided - generate them!
       if (valuesLabels == null) {
         final double optimalStepValue =
-            _calculateOptimalStepValue(maxValue - minValue, height);
+            _calculateOptimalStepValue(maxValue - minValue, height/3);
         int stepsNumber = 1;
 
         // Find bottom line value
