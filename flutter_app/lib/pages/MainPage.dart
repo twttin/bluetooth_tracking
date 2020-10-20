@@ -3,14 +3,9 @@ import 'package:myBCAA/pages/measure.dart';
 import 'package:myBCAA/pages/settings.dart';
 import 'package:myBCAA/pages/lifestyle.dart';
 import 'package:myBCAA/pages/profile.dart';
-import 'package:charts_flutter/flutter.dart';
 
 
 
-//const PrimaryColor = const Color(0xFF288EC7);
-//const SpecialColor1 = const Color(0xFF2FAFB2);
-//const SpecialColor2 = const Color(0xFFD1BC64);
-//const SpecialColor3 = const Color(0xFFCF364A);
 
 class MainPage extends StatefulWidget {
 

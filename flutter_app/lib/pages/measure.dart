@@ -1,12 +1,10 @@
 import 'dart:async';
-//import 'dart:html';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:myBCAA/helpers/myData.dart';
+
 import 'package:myBCAA/BackgroundCollectedPage.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:myBCAA/pages/StoredData.dart';
 import 'package:myBCAA/helpers/measure_card_widget.dart';
 
 import '../SelectBondedDevicePage.dart';
@@ -15,7 +13,7 @@ import '../BackgroundCollectedPage.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:myBCAA/helpers/myProvider.dart';
 import 'package:provider/provider.dart';
-import 'package:myBCAA/helpers/manual_data.dart';
+
 
 const SpecialColor1 = const Color(0xFF2FAFB2);
 const SpecialColor2 = const Color(0xFFD1BC64);
