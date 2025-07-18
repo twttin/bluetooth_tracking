@@ -8,7 +8,12 @@ This project aims to create a comprehensive Bluetooth tracking application that 
 
 ## Research Context
 
-This application was developed for research purposes and is associated with published scientific work in Nature Biomedical Engineering. The research demonstrates practical applications of Bluetooth-based tracking technology in biomedical contexts.
+This application was developed for research purposes in collaboration with the **Gao Research Group at Caltech**. The work is associated with published scientific research in Nature Biomedical Engineering, demonstrating practical applications of Bluetooth-based tracking technology in biomedical contexts.
+
+### Research Collaboration
+
+- **Research Partner**: [Gao Research Group](https://gao.caltech.edu/), California Institute of Technology
+- **Institution**: Caltech (California Institute of Technology)
 
 ### Research Publication
 
